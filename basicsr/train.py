@@ -7,6 +7,11 @@ import time
 import torch
 from os import path as osp
 
+import sys
+
+
+sys.path.append(osp.dirname(osp.dirname(osp.abspath(__file__))))
+
 from basicsr.data import create_dataloader, create_dataset
 from basicsr.data.data_sampler import EnlargedSampler
 from basicsr.data.prefetch_dataloader import CPUPrefetcher, CUDAPrefetcher
@@ -17,7 +22,9 @@ from basicsr.utils import (MessageLogger, check_resume, get_env_info,
                            set_random_seed)
 from basicsr.utils.dist_util import get_dist_info, init_dist
 from basicsr.utils.options import dict2str, parse
+import sys
 
+sys.path.append("../")
 import numpy as np
 
 def parse_options(is_train=True):

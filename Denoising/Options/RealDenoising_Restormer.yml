@@ -1,8 +1,7 @@
-# general settings
 name: RealDenoising_Restormer
 model_type: ImageCleanModel
 scale: 1
-num_gpu: 8  # set num_gpu: 0 for cpu mode
+num_gpu: 1  # set num_gpu: 0 for cpu mode
 manual_seed: 100
 
 # dataset and data loader settings
@@ -10,8 +9,9 @@ datasets:
   train:
     name: TrainSet
     type: Dataset_PairedImage
-    dataroot_gt: ./Denoising/Datasets/train/SIDD/target_crops
-    dataroot_lq: ./Denoising/Datasets/train/SIDD/input_crops
+    in_ch: 1    ## Grayscale image
+    dataroot_gt: /data2/hilo2-512/immature-ovary-20x-super-extreme/gt
+    dataroot_lq: /data2/hilo2-512/immature-ovary-20x-super-extreme/raw
     geometric_augs: true
 
     filename_tmpl: '{}'
@@ -23,19 +23,19 @@ datasets:
     num_worker_per_gpu: 8
     batch_size_per_gpu: 8
 
-    ### -------------Progressive training--------------------------
+    ## -------------Progressive training--------------------------
     mini_batch_sizes: [8,5,4,2,1,1]             # Batch size per gpu   
     iters: [92000,64000,48000,36000,36000,24000]
     gt_size: 384   # Max patch size for progressive training
     gt_sizes: [128,160,192,256,320,384]  # Patch sizes for progressive training.
-    ### ------------------------------------------------------------
+    ## ------------------------------------------------------------
 
-    ### ------- Training on single fixed-patch size 128x128---------
+    # ### ------- Training on single fixed-patch size 128x128---------
     # mini_batch_sizes: [8]   
     # iters: [300000]
     # gt_size: 128   
     # gt_sizes: [128]
-    ### ------------------------------------------------------------
+    # ### ------------------------------------------------------------
 
     dataset_enlarge_ratio: 1
     prefetch_mode: ~
@@ -43,16 +43,17 @@ datasets:
   val:
     name: ValSet
     type: Dataset_PairedImage
-    dataroot_gt: ./Denoising/Datasets/val/SIDD/target_crops
-    dataroot_lq: ./Denoising/Datasets/val/SIDD/input_crops
+    in_ch: 1    ## Grayscale image
+    dataroot_gt: /data2/hilo2-512/immature-ovary-20x-super-extreme/gt
+    dataroot_lq: /data2/hilo2-512/immature-ovary-20x-super-extreme/raw
     io_backend:
       type: disk
 
 # network structures
 network_g:
   type: Restormer
-  inp_channels: 3
-  out_channels: 3
+  inp_channels: 1
+  out_channels: 1
   dim: 48
   num_blocks: [4,6,6,8]
   num_refinement_blocks: 4
@@ -108,7 +109,7 @@ val:
   save_img: false
   rgb2bgr: true
   use_image: false
-  max_minibatch: 8
+  max_minibatch: 64
 
   metrics:
     psnr: # metric name, can be arbitrary
@@ -118,7 +119,7 @@ val:
 
 # logging settings
 logger:
-  print_freq: 1000
+  print_freq: 100
   save_checkpoint_freq: !!float 4e3
   use_tb_logger: true
   wandb:

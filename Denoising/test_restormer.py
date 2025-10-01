@@ -10,6 +10,7 @@ import numpy as np
 import os
 import argparse
 from tqdm import tqdm
+import sys
 
 import torch
 import torch.nn as nn
@@ -21,6 +22,7 @@ from skimage import img_as_ubyte
 import h5py
 import scipy.io as sio
 from pdb import set_trace as stx
+from csbdeep.data.generate import sample_patches_from_multiple_stacks, no_background_patches, norm_percentiles
 
 parser = argparse.ArgumentParser(description='Real Image Denoising using Restormer')
 
@@ -52,25 +54,67 @@ print("===>Testing using weights: ",args.weights)
 model_restoration.cuda()
 model_restoration = nn.DataParallel(model_restoration)
 model_restoration.eval()
+def generate_patches2(X, Y, patch_size):
+    patch_filter = no_background_patches()
+    normalization = norm_percentiles(percentiles=(1, 99.9))
+    while True:
+        X_batch = []
+        Y_batch = []
+        # # image_idx = np.random.randint(len(X),size=batch_size)
+        # for i in image_idx:
+        _Y,_X = sample_patches_from_multiple_stacks((Y,X), patch_size, 1, None, None)
+        _X, _Y = normalization(_X,_Y, X,Y,None,None)
+        X_batch.append(_X)
+        Y_batch.append(_Y)
+        yield np.concatenate(X_batch)[...,None],np.concatenate(Y_batch)[...,None]
 
-def load_dataset(condition):
-    image_list = []
-    path = os.path.join(args.path,args.dataset,condition,'*.tif')
-    paths = sorted(glob.glob(path))
-    paths = paths[len(paths)*9//10:]
-    for im_path in paths:
-        im = imageio.imread(im_path).astype('float32')/65535
-        image_list.append(im)
-    return image_list
+# def load_dataset(condition):
+#     image_list = []
+#     path = os.path.join(args.path,args.dataset,condition,'*.tif')
+#     paths = sorted(glob.glob(path))
+#     paths = paths[len(paths)*9//10:]
+#     for im_path in paths:
+#         im = imageio.imread(im_path).astype('float32')/65535
+#         image_list.append(im)
+#     return image_list
+def load_dataset():
+    raw_image_list = []
+    gt_image_list = []
+    path_gt = os.path.join(args.path,args.dataset,'gt','*.tif')
+    path_lq = os.path.join(args.path,args.dataset,'raw','*.tif')
+    paths_gt = sorted(glob.glob(path_gt))
+    paths_lq = sorted(glob.glob(path_lq))
+    pathgt = paths_gt[len(paths_gt)*9//10:]
+    print('pathgt', pathgt)
+    pathlq = paths_lq[len(paths_lq)*9//10:]
+    print('pathlq', pathlq)
+    for im_path in range(len(pathgt)):
+        # print('im_path', pathgt[im_path])
+        img_gt = imageio.imread(pathgt[im_path]).astype('float32')
+        # print('img_gt.shape1', img_gt.shape)
+        img_lq = imageio.imread(pathlq[im_path]).astype('float32')
+        gen = generate_patches2(img_lq, img_gt, (512,512))
+        img_lq, img_gt = next(gen)
+        # print('img_gt.shape2', img_gt.shape)
+        img_lq = img_lq.squeeze(axis=0)
+        img_gt = img_gt.squeeze(axis=0)
+        img_lq = img_lq.squeeze(axis=-1)
+        img_gt = img_gt.squeeze(axis=-1)
+        # print('img_gt.shape3', img_gt.shape)
+        raw_image_list.append(img_lq)
+        gt_image_list.append(img_gt)
+    return raw_image_list, gt_image_list
 
-test_images = load_dataset('raw')
-gt_images = load_dataset('gt')
+# test_images = load_dataset('raw')
+# gt_images = load_dataset('gt')
+test_images, gt_images = load_dataset()
 test_indices = range(len(test_images))
+# print('test_images', test_images)
 
 print('%d test images'%len(test_images))
 print('%d gt images'%len(gt_images))
 
-print('test image shape:',test_images[0].shape)
+# print('test image shape:',test_images[0].shape)
 
 os.makedirs('results/restormer.%s'%args.dataset,exist_ok=True)
 os.makedirs('results/restormer.gt',exist_ok=True)
@@ -85,12 +129,13 @@ times = []
 with open(results_path,'w') as f:
     f.write('Noisy PSNR\tDenoised PSNR\tNoisy SSIM\tDenoised SSIM\n')
     for im,gt,index in zip(test_images,gt_images,test_indices):
+
         import time
         start_time = time.time()
 
         with torch.no_grad():
             pred = model_restoration(torch.tensor(im[None,None,:,:]))
-            pred = torch.clamp(pred,0,1).cpu().detach().squeeze().numpy()
+            pred = pred.cpu().detach().squeeze().numpy()
         times.append(time.time()-start_time)
         
         noisy = im
