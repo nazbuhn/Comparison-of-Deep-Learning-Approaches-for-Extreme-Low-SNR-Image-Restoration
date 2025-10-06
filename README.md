@@ -2,6 +2,18 @@
 
 <h2>Overview:</h2>
 <h3>Title: Comparison of Deep Learning Approaches for Extreme Low-SNR Image Restoration</h3>
+<h4>Authors</h4>
+Nasreen Elizabeth Buhn<sup>1</sup>
+Sriya Reddy Adunur<sup>2</sup>
+Joseph Hamilton<sup>3</sup>
+Summer Levis<sup>3</sup>
+Guy M. Hagen<sup>3</sup>
+Jonathan D. Ventura<sup>2</sup>
+
+<sup>1</sup>Biological Sciences Department, California Polytechnic State University, San Luis Obispo, California, 93407
+<sup>2</sup>Department of Computer Science and Software Engineering, California Polytechnic State University, San Luis Obispo, California, 93407
+<sup>3</sup>UCCS BioFrontiers Center, University of Colorado at Colorado Springs, 1420 Austin Bluffs Parkway, Colorado Springs, Colorado, 80918
+
 <h4>Abstract:</h4>
 <h5>Background: </h5>
 Live-cell fluorescence microscopy enables the study of dynamic cellular processes. However, fluorescence microscopy can damage cells and disrupt biological processes through photobleaching and phototoxicity. Reducing a sample’s light exposure mitigates these effects but results in low signal-to-noise ratio (SNR) images. Deep learning provides a solution for restoring these low-SNR images. However, these deep learning methods require large, representative datasets for training, testing, and benchmarking, as well as substantial GPU memory, particularly for denoising large images.
