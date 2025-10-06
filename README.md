@@ -19,5 +19,5 @@ Our dataset provides a diverse benchmark for evaluating deep learning denoising 
 
 
 <h2>File descriptions:</h2>
-<b>Restormer:</b>Modified Restormer model (see the "Deep learning methods" section).
+<b>Restormer:</b> Modified Restormer model (see the "Deep learning methods" section).
 <br><b>Adaptive_image_stitching.py:</b> Implementation of the adaptive image-stitching logic described in the paper (see the “Adaptive image stitching” section).
