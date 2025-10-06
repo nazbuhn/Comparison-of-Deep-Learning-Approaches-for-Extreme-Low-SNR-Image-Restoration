@@ -20,22 +20,7 @@ import numpy as np
 import torch
 import cv2
 import glob
-# def load_images(dirpath):
-#     images = [imread(path) for path in sorted(glob.glob(dirpath + '/*.tif'))]
-#     return np.stack(images,axis=0)
-# def generate_patches(X,Y,patch_size,batch_size):
-#     patch_filter = no_background_patches()
-#     normalization = norm_percentiles()
-#     while True:
-#         X_batch = []
-#         Y_batch = []
-#         image_idx = np.random.randint(len(X),size=batch_size)
-#         for i in image_idx:
-#             _Y,_X = sample_patches_from_multiple_stacks((Y[i],X[i]), patch_size, 1, None, None)
-#             _X, _Y = normalization(_X,_Y, X[i],Y[i],None,None)
-#             X_batch.append(_X)
-#             Y_batch.append(_Y)
-#         yield np.concatenate(X_batch)[...,None],np.concatenate(Y_batch)[...,None]
+
 def generate_patches2(X, Y, patch_size):
     patch_filter = no_background_patches()
     normalization = norm_percentiles()
@@ -130,21 +115,18 @@ class Dataset_PairedImage(data.Dataset):
             scale = self.opt['scale']
             index = index % len(self.paths)
             # Load gt and lq images. Dimension order: HWC; channel order: BGR;
-            # image range: [0, 1], float32.
             gt_path = self.paths[index]['gt_path']
             lq_path = self.paths[index]['lq_path']
             img_gt = imageio.imread(gt_path).astype('float32')
             img_lq = imageio.imread(lq_path).astype('float32')
             gen = generate_patches2(img_lq, img_gt, (512,512))
             img_lq, img_gt = next(gen)
-            # print('img_lq.shape', img_lq.shape)
 
         
             # img_lq = imageio.imread(lq_path).astype('float32')
             # img_lq = np.expand_dims(img_lq, axis=2)
             # img_gt = np.expand_dims(img_gt, axis=2)
             img_lq = img_lq.squeeze(axis=0)
-            # print('img_lq.shape', img_lq.shape)
             img_gt = img_gt.squeeze(axis=0)
 
             # augmentation for training
@@ -165,14 +147,6 @@ class Dataset_PairedImage(data.Dataset):
             img_gt, img_lq = img2tensor([img_gt, img_lq],
                                         bgr2rgb=True,
                                         float32=True)
-            # # normalize
-            # print('self.mean', self.mean)
-            # print('self.std', self.std)
-            # if self.mean is not None or self.std is not None:
-            #     print('self.mean', self.mean)
-            #     print('self.std', self.std)
-            #     normalize(img_lq, self.mean, self.std, inplace=True)
-            #     normalize(img_gt, self.mean, self.std, inplace=True)
             
             return {
                 'lq': img_lq,
@@ -181,65 +155,6 @@ class Dataset_PairedImage(data.Dataset):
                 'gt_path': gt_path
             }
 
-    # def __getitem__(self, index):
-    #     if self.file_client is None:
-    #         self.file_client = FileClient(
-    #             self.io_backend_opt.pop('type'), **self.io_backend_opt)
-
-    #     scale = self.opt['scale']
-# tried using whole list of training to normalize all of the images at same time.... this did not work gave back an image shape of 1584, 512,512, 1 
-
-        # Load gt and lq images. Dimension order: HWC; channel order: BGR;
-        # image range: [0, 1], float32.
-        # gt_imgs = load_images(self.gt_folder)
-        # lq_imgs = load_images(self.lq_folder)
-        # gen = generate_patches(lq_imgs,gt_imgs,(512, 512), 1584)
-        # x_batch,y_batch = next(gen)
-        # index = index % len(y_batch)
-        # # print(x_batch)
-        # # print('index', index)
-
-        # img_gt = y_batch[index]
-        # print(len(img_gt))
-        # # img_gt = imageio.imread(gt_path).astype('float32')
-        # # print(img_gt)
-        # img_lq = x_batch[index]
-        # # img_lq = imageio.imread(lq_path).astype('float32')
-        
-        # print('x_batch.shape', x_batch.shape)
-        # print('y_batch.shape', y_batch.shape)
-        # img_gt = np.expand_dims(img_gt, axis=2)
-        # img_lq = np.expand_dims(img_lq, axis=2)
-
-        # augmentation for training
-        # if self.opt['phase'] == 'train':
-        #     gt_size = self.opt['gt_size']
-        #     # padding
-        #     img_gt, img_lq = padding(img_gt, img_lq, gt_size)
-
-        #     # random crop
-        #     img_gt, img_lq = paired_random_crop(img_gt, img_lq, gt_size, scale,
-        #                                         gt_path)
-
-        #     # flip, rotation augmentations
-        #     if self.geometric_augs:
-        #         img_gt, img_lq = random_augmentation(img_gt, img_lq)
-            
-        # # BGR to RGB, HWC to CHW, numpy to tensor
-        # img_gt, img_lq = img2tensor([img_gt, img_lq],
-        #                             bgr2rgb=True,
-        #                             float32=True)
-        # # normalize
-        # if self.mean is not None or self.std is not None:
-        #     normalize(img_lq, self.mean, self.std, inplace=True)
-        #     normalize(img_gt, self.mean, self.std, inplace=True)
-        
-        # return {
-        #     'lq': img_lq,
-        #     'gt': img_gt,
-        #     'lq_path': lq_path,
-        #     'gt_path': gt_path
-        # }
 
     def __len__(self):
         return len(self.paths)
