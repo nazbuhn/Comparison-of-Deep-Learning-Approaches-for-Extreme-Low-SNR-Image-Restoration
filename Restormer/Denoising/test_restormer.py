@@ -68,15 +68,6 @@ def generate_patches2(X, Y, patch_size):
         Y_batch.append(_Y)
         yield np.concatenate(X_batch)[...,None],np.concatenate(Y_batch)[...,None]
 
-# def load_dataset(condition):
-#     image_list = []
-#     path = os.path.join(args.path,args.dataset,condition,'*.tif')
-#     paths = sorted(glob.glob(path))
-#     paths = paths[len(paths)*9//10:]
-#     for im_path in paths:
-#         im = imageio.imread(im_path).astype('float32')/65535
-#         image_list.append(im)
-#     return image_list
 def load_dataset():
     raw_image_list = []
     gt_image_list = []
@@ -105,16 +96,13 @@ def load_dataset():
         gt_image_list.append(img_gt)
     return raw_image_list, gt_image_list
 
-# test_images = load_dataset('raw')
-# gt_images = load_dataset('gt')
+
 test_images, gt_images = load_dataset()
 test_indices = range(len(test_images))
-# print('test_images', test_images)
 
 print('%d test images'%len(test_images))
 print('%d gt images'%len(gt_images))
 
-# print('test image shape:',test_images[0].shape)
 
 os.makedirs('results/restormer.%s'%args.dataset,exist_ok=True)
 os.makedirs('results/restormer.gt',exist_ok=True)
