@@ -1,4 +1,4 @@
-<h1>Comparison of Deep Learning Approaches for Extreme Low-SNR Image Restoration software and analytics code</h1>
+<h1>Comparison of deep learning approaches for extreme low-SNR image restoration software and analytics code</h1>
 
 <h2>Overview:</h2>
 <h3>Title: Comparison of Deep Learning Approaches for Extreme Low-SNR Image Restoration</h3>
@@ -18,6 +18,6 @@ We present a new fluorescence microscopy dataset designed to expand the range of
 Our dataset provides a diverse benchmark for evaluating deep learning denoising methods, and our stitching method provides a solution to GPU memory constraints encountered when processing large images. Among the evaluated deep learning models, the supervised transformer-based model had the top denoising performance but required the longest training time. 
 
 
-<h2>File Descriptions:</h2>
-<b>Restormer:</b> Modifications made the Restormer model are included under the Restormer directory
-<br><b>Adaptive_image_stitching.py:</b> The adaptive image stitching logic implementation described in (paper section: Adaptive image stitching)
+<h2>File descriptions:</h2>
+<b>Restormer:</b> Modifications made to the Restormer model are included under the Restormer folder.
+<br><b>Adaptive_image_stitching.py:</b> Implementation of the adaptive image-stitching logic described in the paper (see the “Adaptive image stitching” section).
