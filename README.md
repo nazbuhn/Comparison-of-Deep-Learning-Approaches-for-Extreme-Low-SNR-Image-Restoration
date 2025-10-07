@@ -20,6 +20,9 @@ Our dataset provides a diverse benchmark for evaluating deep learning denoising 
 
 <h2>File descriptions:</h2>
 <br><b>External/Restormer: </b>Forked modified Restormer model. Edited code description is included in UPDATE.md.
+
 <br><b>CARE: </b>Contains training (train_care_generator.py) and testing (test_care.py) script used for CARE implementation.(https://github.com/CSBDeep/CSBDeep/commits/main/ commit:282664fc294e8ba5d00a6ea82fcadcf9198a24b9)
+
 <br><b>N2F: </b>Contains N2F (N2F.py) and test (run.py) script used in Noise2Fast impletmentation. (https://github.com/jason-lequyer/Noise2Fast/commits/main/ commit: 8b244699ee84eb057b77cbcedc9dc6f5a4a434b8)
+
 <br><b>Adaptive_image_stitching.py:</b> Implementation of the adaptive image-stitching logic described in the paper (see the “Adaptive image stitching” section).
