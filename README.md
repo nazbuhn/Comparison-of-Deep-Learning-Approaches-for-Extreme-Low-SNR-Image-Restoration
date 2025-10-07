@@ -25,4 +25,4 @@ Our dataset provides a diverse benchmark for evaluating deep learning denoising 
 
 <br><b>N2F: </b>Contains N2F (N2F.py) and test (run.py) script used in Noise2Fast impletmentation. (https://github.com/jason-lequyer/Noise2Fast/commits/main/ commit: 8b244699ee84eb057b77cbcedc9dc6f5a4a434b8)
 
-<br><b>Adaptive_image_stitching.py:</b> Implementation of the adaptive image-stitching logic described in the paper (see the “Adaptive image stitching” section).
+<br><b>Adaptive_image_stitching.py:</b> Implementation of the adaptive image-stitching logic described in paper (see the “Adaptive image stitching” section).
