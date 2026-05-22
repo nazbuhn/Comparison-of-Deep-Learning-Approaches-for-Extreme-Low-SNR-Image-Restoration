@@ -17,9 +17,6 @@ import tensorflow as tf
 
 import time
 
-np.random.seed(1234)
-tf.set_random_seed(1234)
-
 parser = argparse.ArgumentParser()
 parser.add_argument('--path',required=True,help='path to dataset root')
 parser.add_argument('--dataset',required=True,help='dataset name e.g. 01')
