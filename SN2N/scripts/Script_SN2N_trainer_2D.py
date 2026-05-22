@@ -28,8 +28,7 @@ if __name__ == '__main__':
     ======Other parameters do not require modification; for details, refer to SN2N.get_options.========
     """
         
-    #img_path = 'D:/SN2N-main/examples/denoising2D/data/raw_data'
-    img_path = '/files/microscope-denoising/SN2N/actin-60x/train'
+    img_path = 'D:/SN2N-main/examples/denoising2D/data/raw_data'
     sn2n_loss = '1'
     bs = '32'
     lr = '2e-4'

@@ -21,10 +21,8 @@ if __name__ == '__main__':
         the given model_path on the Img_path provided by the user.
     """
     
-    # img_path = 'M:\HGS\simulate\DATA\SN2N/raw2/data'
-    img_path = '/files/microscope-denoising/SN2N/actin-60x/test'
-    # model_path = 'M:\HGS\simulate\DATA\SN2N/raw2\models'
-    model_path = '/files/microscope-denoising/SN2N/actin-60x/models'
+    img_path = 'M:\HGS\simulate\DATA\SN2N/raw2/data'
+    model_path = 'M:\HGS\simulate\DATA\SN2N/raw2\models'
     infer_mode = '1'
     
     Predict2D_args = [

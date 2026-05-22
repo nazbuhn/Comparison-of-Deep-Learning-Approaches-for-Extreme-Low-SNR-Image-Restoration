@@ -34,8 +34,7 @@ if __name__ == '__main__':
     ======Other parameters do not require modification; for details, refer to SN2N.get_options.========
     """
     
-    #img_path = "D:/SN2N-main/examples/denoising2D/data/raw_data"
-    img_path = sys.argv[1] #"/files/microscope-denoising/SN2N/actin-60x/train"
+    img_path = "D:/SN2N-main/examples/denoising2D/data/raw_data"
     P2Pmode = '0'
     P2Pup = '0'
     BAmode = '2'
