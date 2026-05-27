@@ -8,9 +8,9 @@ import imageio
 
 #take images and set output folder 
 parser = argparse.ArgumentParser()
-parser.add_argument('--path',required=True,help='path to directory with patches')
-parser.add_argument('--dataset',required=True,help='dataset (e.g. actin-20x-noise1)')
-parser.add_argument('--out',required=True,help='dataset (e.g. actin-20x-noise1)')
+parser.add_argument('--path',required=True,help='path to dataset root')
+parser.add_argument('--dataset',required=True,help='dataset (e.g.01)')
+parser.add_argument('--out',required=True,help='path to output directory')
 args = parser.parse_args()
 
 os.makedirs(f'{args.out}/{args.dataset}/raw', exist_ok=True)
