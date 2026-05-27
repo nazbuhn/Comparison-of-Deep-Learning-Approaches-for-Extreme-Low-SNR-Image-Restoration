@@ -27,7 +27,7 @@ np.random.seed(0)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--path',required=True,help='path to dataset root')
-parser.add_argument('--dataset',required=True,help='dataset (e.g. actin-20x-noise1)')
+parser.add_argument('--dataset',required=True,help='dataset (e.g. 01)')
 parser.add_argument('--epoch',type=int,default=200,help='num epochs')
 parser.add_argument('--patch_size',type=int,default=128,help='path size')
 parser.add_argument('--batch_size',type=int,default=16,help='path size')

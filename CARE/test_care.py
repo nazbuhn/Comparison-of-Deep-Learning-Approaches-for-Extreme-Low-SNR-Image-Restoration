@@ -16,12 +16,13 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--path',required=True,help='path to dataset')
-parser.add_argument('--dataset',required=True,help='dataset (e.g. actin-20x)')
+parser.add_argument('--dataset',required=True,help='dataset (e.g. 01)')
+parser.add_argument('--checkpoint',required=True,help='path to checkpoint folder')
 parser.add_argument('--ntiles',type=int,default=1,help='number of tiles (increase if getting out-of-memory errors)')
 
 args = parser.parse_args()
 
-model = CARE(config=None,name="weights/care-%s"%args.dataset)
+model = CARE(config=None,name=args.checkpoint)
 
 model.load_weights("weights_best.h5")
 
