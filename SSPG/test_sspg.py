@@ -18,6 +18,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--path',required=True,help='path to dataset root')
 parser.add_argument('--dataset',required=True,help='dataset name e.g. 01')
 parser.add_argument('--mode',default='uncalib',help='noise model: mse, uncalib, gaussian, poisson, poissongaussian')
+parser.add_argument('--checkpoint',required=True,help='path to checkpoint file')
 parser.add_argument('--reg',type=float,default=0.1,help='regularization weight on prior std. dev.')
 
 args = parser.parse_args()
@@ -26,12 +27,7 @@ args = parser.parse_args()
 
 model = gaussian_blindspot_network((512, 512, 1),'uncalib')
 
-if args.mode == 'uncalib' or args.mode == 'mse':
-    weights_path = 'weights/weights.%s.%s.latest.hdf5'%(args.dataset,args.mode)
-else:
-    weights_path = 'weights/weights.%s.%s.%0.3f.latest.hdf5'%(args.dataset,args.mode,args.reg)
-
-model.load_weights(weights_path)
+model.load_weights(args.checkpoint)
 
 """ Load test images """
 
