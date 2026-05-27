@@ -1,6 +1,6 @@
 ### Self-Supervised Poisson Gaussian
 
-This folder contains a copy of the [authors' implementation of SSPG at https://github.com/jonathanventura/self-supervised-poisson-gaussian](https://github.com/jonathanventura/self-supervised-poisson-gaussian).
+This folder contains a copy of the authors' implementation of SSPG at https://github.com/jonathanventura/self-supervised-poisson-gaussian .
 
 To train the model:
 
