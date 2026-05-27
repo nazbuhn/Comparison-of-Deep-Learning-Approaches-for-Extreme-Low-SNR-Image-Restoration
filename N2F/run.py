@@ -1,9 +1,8 @@
 import os
 import sys
 
-name = sys.argv[1]
-in_dir = '/data2/hilo2-512/' + name + '/raw'
-out_dir = '/data2/hilo2-512-noise2fast/' + name
+in_dir = sys.argv[1]
+out_dir = sys.argv[2]
 
 os.makedirs(out_dir,exist_ok=True)
 
