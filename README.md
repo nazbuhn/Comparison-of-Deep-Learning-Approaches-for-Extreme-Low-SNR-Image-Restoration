@@ -31,6 +31,6 @@ Our dataset provides a diverse benchmark for evaluating deep learning denoising 
 
 <br><b>Adaptive_image_stitching.py:</b> Implementation of the adaptive image-stitching logic described in paper (see the “Adaptive image stitching” section).
 
-<br><b>hilo512_crop.py: </b> Script to crop images into 512×512 tiles.
+<br><b>non_overlapping_crop.py: </b> Script to crop images into 512×512 tiles.
 
 <br><b>overlapping_crop.py: </b>Script to generate overlapping crops for adaptive image stitching (see “Adaptive image stitching”).
