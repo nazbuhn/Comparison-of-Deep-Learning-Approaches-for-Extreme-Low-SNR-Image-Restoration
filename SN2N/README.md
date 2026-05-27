@@ -1,6 +1,6 @@
 ### Self-Inspired Noise2Noise
 
-This folder contains a copy of the [authors' implementation of SN2N at https://github.com/SR-Wiki/SN2N](https://github.com/SR-Wiki/SN2N).
+This folder contains a copy of the authors' implementation of SN2N at https://github.com/SR-Wiki/SN2N .
 
 The script `split_and_normalize.py` will split a dataset into train/test splits and normalize the images using percentage normalization.
 
