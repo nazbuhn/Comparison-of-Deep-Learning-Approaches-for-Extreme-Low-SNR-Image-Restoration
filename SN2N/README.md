@@ -1,6 +1,6 @@
 ### Self-Inspired Noise2Noise
 
-We used the [authors' implementation of SN2N at https://github.com/SR-Wiki/SN2N](https://github.com/SR-Wiki/SN2N).
+This folder contains a copy of the [authors' implementation of SN2N at https://github.com/SR-Wiki/SN2N](https://github.com/SR-Wiki/SN2N).
 
 The script `split_and_normalize.py` will split a dataset into train/test splits and normalize the images using percentage normalization.
 
@@ -9,7 +9,7 @@ The script `split_and_normalize.py` will split a dataset into train/test splits 
         --dataset 01
         --outpath dataset
 
-We then ran SN2N as follows:
+Then run SN2N as follows:
 
     python -m scripts.Script_SN2N_datagen_2D \
           --img_path dataset/01 \
@@ -24,3 +24,4 @@ We then ran SN2N as follows:
           --model_path dataset/01/models \
           --infer_mode 1
 
+To use one of the pre-trained models from GigaDB, place the cropped images in the `test/` directory and checkpoint file the `models/` directory.
