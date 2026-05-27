@@ -1,6 +1,6 @@
 ### Content-Aware Image Restoration (CARE)
 
-This folder contains scripts to train and test a CARE model using the [authors' implementation of CARE at https://github.com/csbdeep/csbdeep](https://github.com/csbdeep/csbdeep).
+This folder contains scripts to train and test a CARE model using the authors' implementation of CARE at https://github.com/csbdeep/csbdeep .
 
 To train the model:
 
